@@ -10,29 +10,30 @@ task_list_byID = []
 
 def generateRandomNumber():
   num = time.time_ns()
-  return int(num)
+  return num
 
 
 def getTaskByID(id):
   for t in task_list:
-	  if t['id']== int(id):
+	  if t['id'] == int(id):
 		  return t
 
 
 def putTaskById(id,title, description, updated_by):
-    # title = request.form['title']
-    # description =  request.form['description']
-    # updated_by =  request.form['updated_by']
-    
-    if int(id) in task_list_byID:
-      for t in task_list:
-        if int(id) == int(t['id']):
-          t[title] = title
-          t[description] = description
-          t[updated_by] = updated_by
-          return True
-    else:
-      return False
+  # title = request.form['title']
+  # description =  request.form['description']
+  # updated_by =  request.form['updated_by']
+  
+  if int(id) in task_list_byID:
+    for task in task_list:
+      if int(id) == task['id']:
+        task['title'] = title
+        task['description'] = description
+        task['updated_by'] = updated_by
+        task['updated_at'] = generateRandomNumber()
+        return True
+  else:
+    return False
 
 
 def addNewTask(title, description, created_at, updated_by = 'guest'):
@@ -54,7 +55,7 @@ def addNewTask(title, description, created_at, updated_by = 'guest'):
 def deleteTaskById(id):
   if id in task_list_byID:
     for t in task_list:
-      if id == t['id']:
+      if int(id) == t['id']:
         task_list.remove(t)
         task_list_byID.remove(id)
         return True
@@ -109,4 +110,4 @@ def task_by_id(id):
 
 
 if __name__=='__main__':
-  app.run(debug=True, port=8001)
+  app.run(debug=True)
